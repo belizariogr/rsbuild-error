@@ -1,0 +1,15 @@
+{
+    "short_name": "Boa Gestão",
+    "name": "Boa Gestão",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "theme_color": "#000",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "150x150",
+            "type": "image/svg+xml"
+        }
+    ]
+}
