@@ -183,6 +183,7 @@ export const Dashboard = () => {
                 value={textValue}
                 onChange={handleChange}
                 inputRef={inputBarCode}
+                variant='outlined'
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                         console.log('Cant debug here...')
@@ -192,7 +193,6 @@ export const Dashboard = () => {
                     }
                 }}
             />
-            <p>{'Bem vindo ao Boa Gestão'}</p>
         </Page>
     )
 }
