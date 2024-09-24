@@ -69,9 +69,10 @@
     ]
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.0.1-beta.2",
-    "@rsbuild/plugin-react": "^1.0.1-beta.2",
-    "@rsbuild/plugin-svgr": "^1.0.1-beta.2",
+    "@rsbuild/core": "^1.0.6",
+    "@rsbuild/plugin-react": "^1.0.2",
+    "@rsbuild/plugin-svgr": "^1.0.2",
+    "@rsbuild/plugin-type-check": "^1.0.1",
     "@types/crypto-js": "^4.1.1",
     "@types/node": "^12.20.37",
     "@types/react": "^17.0.36",

@@ -24,7 +24,7 @@ export default defineConfig({
     html: {
         title: 'Boa Gestão',
         favicon: './src/icons/favicon.svg',
-        appIcon: './src/icons/apple/icon.png',
+        // appIcon: './src/icons/apple/icon.png',
         meta: {
             viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
         },

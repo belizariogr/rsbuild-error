@@ -17,7 +17,7 @@ const Config: IConfig = {
 
     footnotes: `${process.env.PUBLIC_FOOTNOTES}`,
 
-    multiDomain: true,
+    multiDomain: false,
     multiServer: false,
 
     registerEndpoint: `${process.env.PUBLIC_REGISTER_PATH}`,

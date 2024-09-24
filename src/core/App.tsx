@@ -76,6 +76,7 @@ function App() {
     const [accountInfo, setAccountInfo] = useState<AccountInfo>(() => ({ loading: true, lang: !Config.defaultLang }));
     const [user, setUser] = useState<User>(() => {
         const u = new User('');
+        u.authenticated = true;
         if (!accountInfo.lang && lang !== LangList[0]) {
             setLang(LangList[0]);
             setStorage('lang', LangList[0].code);
@@ -136,10 +137,10 @@ function App() {
         if (notAuthenticatedRoutesNames.includes(pathname)) {
             if (api.user)
                 api.user.authenticated = false;
-            api?.notifications?.close();
             setLoading(false);
             return
         }
+        navigate('/dashboard');
     }, [api, pathname]);
 
     useEffect(() => {
@@ -149,76 +150,21 @@ function App() {
 
     const getPermissions = async () => {
 
-        try {
-            if (!loading)
-                setLoading(true);
-            let accInfo: AccountInfo = accountInfo;
-            if (Config.multiDomain && !accountInfo) {
-                accInfo = await getAccountInfo();
-            }
-            if (!accInfo?.lang && lang !== LangList[0]) {
-                setLang(LangList[0]);
-                setStorage('lang', LangList[0].code);
-            }
-            api.account = account;
-            api.accB64 = strToBase64Ex(account);
-            if (!Config.multiDomain) {
-                api.account = localStorage.getItem('account') || '';
-                api.accB64 = api.account;
-            }
-            const rt = await api.refreshToken(true);
-            const newUser = User.parse(rt);
 
-            api.user = newUser;
-            api.accountId = newUser.tenantId;
-            newUser.authenticated = true;
-
-            api.notifications.connectWS();
-            const helper: any = {};
-            const othersHelper: { [key: string]: any } = {};
-
-            await Promise.all([
-                (async () => { helper.permissions = await api.get('permissions', true) })(),
-                (async () => { helper.options = await api.get('options', true) })(),
-                (async () => { await Config.onGetOthers?.(othersHelper, api) })(),
-            ]);
-
-            newUser.others = othersHelper;
-            newUser.systemOptions = helper.options;
-            Utils.updateManifest(Utils.getManifestObj(Config.name, newUser?.others?.company?.NomeFantasia || newUser?.others?.company?.NomeEmpresa, account), "#manifest-placeholder")
-
-            const permissions = helper.permissions;
-            Utils.setPermissions(newUser, permissions);
-            const userRoutes = getUserRoutes(newUser);
-            setRoutes(userRoutes.routes);
-            newUser.routes = userRoutes.visible;
-
-            setUser(newUser);
-            if (!!window.location.hash)
-                navigate(window.location.pathname);
-            setLoading(false);
-        } catch (err) {
-            setLoading(false);
-            user.authenticated = false;
-            // console.log(err)
-            return navigate('/login');
-        }
     };
 
     useEffect(() => {
         if (!account && Config.multiDomain) {
             return
         }
-        const isAuthenticated = (localStorage.getItem(Config.multiDomain ? (account + '.auth') : 'auth') || '') === 'true';
-        if (!isAuthenticated)
-            return gotoLogin(account);
+        // const isAuthenticated = (localStorage.getItem(Config.multiDomain ? (account + '.auth') : 'auth') || '') === 'true';
+
         if (pathname === '/reconnect') {
             window.location.pathname = localStorage.getItem('lastPath') || '/';
             setLoading(false);
             return
         }
         if (notAuthenticatedRoutesNames.includes(pathname) && !user.redirected) {
-            api.notifications?.close();
             setLoading(false);
             return
         }

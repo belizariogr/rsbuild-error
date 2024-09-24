@@ -22,6 +22,7 @@ const Register = lazy(() => import('../../pages/Register'));
 const Redirect = lazy(() => import('../../pages/Redirect'));
 const NoPermissions = lazy(() => import('../../pages/NoPermissions'));
 const MainLayout = lazy(() => import('../../components/layout/MainLayout'));
+const Dashboard = lazy(() => import('../../../pages/Dashboard'));
 
 export const notAuthenticatedRoutes: RouteArray = [
     { name: '$$home', path: '/', element: <></>, core: true },
@@ -32,6 +33,7 @@ export const notAuthenticatedRoutes: RouteArray = [
     { name: '$$redirect', path: '/redirect', element: <Redirect />, public: true, core: true },
     { name: '$$reconnect', path: '/reconnect', element: <Reconnect />, public: true, core: true },
     { name: '$$slowdown', path: '/slowdown', element: <SlowDown />, public: true, core: true },
+    { name: '$$dashboard', path: '/dashboard', element: <Dashboard />, public: true, core: true },
     { name: '*', path: '*', element: <></>, core: true },
 ];
 
@@ -42,7 +44,8 @@ export const notAuthenticatedRoutesNames = [
     ('/' + (Config.registerEndpoint || 'register')),
     '/redirect',
     '/reconnect',
-    '/slowdown'
+    '/slowdown',
+    '/dashboard',
 ];
 
 export const disconnectedRoutes = [
